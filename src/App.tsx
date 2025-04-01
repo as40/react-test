@@ -5,19 +5,22 @@ function App() {
   const [stringData, setStringData] = useState<string>("");
   const [result, setResult] = useState<number|string>("");
 
+  // String calculator method
   const add=(numbers: string)=> {
     if (!numbers) return 0;
   
     const delimiters = /\\n|,|;/;
     if (/[^0-9,\\n,;,//]/.test(numbers)) {
       let negativeNumbers =  numbers.split(delimiters).map(num => parseInt(num.trim())).filter(num => num<0);
+      // Throw error when string contains negative numbers
       if(negativeNumbers.length){
         return `Error: Negative numbers are not allowed ${negativeNumbers}.`;
       }
+      // Throw error when string contains special char
       return "Invalid input: Only comma, semicolon, newline separated numbers are allowed.";
     }
     const numArray = numbers.split(delimiters).map(num => parseInt(num.trim())).filter(num => !isNaN(num));
-    
+    //Sum of numbers from array
     return `Result: ${numArray.reduce((sum, num) => sum + num, 0)}`;
   }
 
