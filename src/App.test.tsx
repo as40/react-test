@@ -1,9 +1,39 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe('String Calculator', () => {
+  test('renders the calculator', () => {
+    render(<App />);
+    expect(screen.getByText(/String Calculator/i)).toBeInTheDocument();
+    expect(screen.getByText(/Enter Numbers/i)).toBeInTheDocument();
+    expect(screen.getByTestId('format-p-element')).toBeInTheDocument();
+    expect(screen.getByTestId('format-span-element')).toBeInTheDocument();
+    expect(screen.getByTestId('text-input-element')).toBeInTheDocument();
+    expect(screen.getByText(/Calculate/i)).toBeInTheDocument();
+    expect(screen.queryByTestId('result-element')).not.toBeInTheDocument();
+  });
+
+  test('calculates the sum of input numbers', () => {
+    render(<App />);
+    
+    const input = screen.getByTestId('text-input-element');
+    const button = screen.getByRole('button', { name: /Calculate/i });
+
+    // Test with comma-separated values
+    fireEvent.change(input, { target: { value: '1,2,3' } });
+    fireEvent.click(button);
+    expect(screen.getByText(/Result: 6/i)).toBeInTheDocument();
+  });
+
+  test('calculates when empty string', () => {
+    render(<App />);
+    
+    const input = screen.getByTestId('text-input-element');
+    const button = screen.getByRole('button', { name: /Calculate/i });
+
+    // Test with comma-separated values
+    fireEvent.change(input, { target: { value: '' } });
+    fireEvent.click(button);
+    expect(screen.queryByTestId('result-element')).not.toBeInTheDocument();
+  });
 });

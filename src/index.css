@@ -11,3 +11,27 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.calculater-container{
+  width: 30%;
+  margin-top: 5%;
+  padding: 20px;
+  text-align: left;
+}
+p{
+  margin-bottom: 0.3rem;
+}
+button{
+  margin-top: 15px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+input{
+  margin-top: 15px;
+}
+.highlight{
+  color: palevioletred;
+}
+h2{
+  text-align: center;
+}
