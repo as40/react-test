@@ -10,7 +10,6 @@ function App() {
   
     const delimiters = /\\n|,|;/;
     if (/[^0-9,\\n,;,//]/.test(numbers)) {
-      console.log('numbers.split(delimiters)',numbers.split(delimiters).map(num => parseInt(num.trim())).filter(num => num<0))
       let negativeNumbers =  numbers.split(delimiters).map(num => parseInt(num.trim())).filter(num => num<0);
       if(negativeNumbers.length){
         return `Error: Negative numbers are not allowed ${negativeNumbers}.`;
