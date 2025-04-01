@@ -10,11 +10,16 @@ function App() {
   
     const delimiters = /\\n|,|;/;
     if (/[^0-9,\\n,;,//]/.test(numbers)) {
-      return "Invalid input: Only comma-separated numbers are allowed.";
+      console.log('numbers.split(delimiters)',numbers.split(delimiters).map(num => parseInt(num.trim())).filter(num => num<0))
+      let negativeNumbers =  numbers.split(delimiters).map(num => parseInt(num.trim())).filter(num => num<0);
+      if(negativeNumbers.length){
+        return `Error: Negative numbers are not allowed ${negativeNumbers}.`;
+      }
+      return "Invalid input: Only comma, semicolon, newline separated numbers are allowed.";
     }
     const numArray = numbers.split(delimiters).map(num => parseInt(num.trim())).filter(num => !isNaN(num));
     
-    return numArray.reduce((sum, num) => sum + num, 0);
+    return `Result: ${numArray.reduce((sum, num) => sum + num, 0)}`;
   }
 
   const handleTextChange=(e:React.ChangeEvent<HTMLInputElement>)=>{
@@ -33,7 +38,7 @@ function App() {
         <p data-testid="format-p-element">(Format:<span data-testid="format-span-element" className='highlight'>//[delimiter]\n[numbers]</span>)</p>
         <div><input data-testid="text-input-element" className="form-control" type="text" name="text" placeholder='E.g., //;\n1;2;3 or 1,2,3' value={stringData} onChange={handleTextChange}/></div>
         <button className='btn btn-primary' onClick={calculate}>Calculate</button>
-        {result?<h3 data-testid="result-element">Result: {result}</h3>:null}
+        {result?<h3 data-testid="result-element">{result}</h3>:null}
       </div>
     </div>
   );

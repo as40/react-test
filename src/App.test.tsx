@@ -31,7 +31,7 @@ describe('String Calculator', () => {
     const input = screen.getByTestId('text-input-element');
     const button = screen.getByRole('button', { name: /Calculate/i });
 
-    // Test with comma-separated values
+    // Test with multiple delimiters values
     fireEvent.change(input, { target: { value: '//;\\n1;2' } });
     fireEvent.click(button);
     expect(screen.getByText(/Result: 3/i)).toBeInTheDocument();
@@ -55,7 +55,7 @@ describe('String Calculator', () => {
     const button = screen.getByRole('button', { name: /Calculate/i });
     fireEvent.change(input, { target: { value: '1,a,3' } });
     fireEvent.click(button);
-    expect(screen.getByText(/Result: Invalid input: Only comma-separated numbers are allowed./i)).toBeInTheDocument();
+    expect(screen.getByText(/Invalid input: Only comma, semicolon, newline separated numbers are allowed./i)).toBeInTheDocument();
     
   });
 
@@ -65,7 +65,16 @@ describe('String Calculator', () => {
     const button = screen.getByRole('button', { name: /Calculate/i });
     fireEvent.change(input, { target: { value: '1,2$3' } });
     fireEvent.click(button);
-    expect(screen.getByText(/Result: Invalid input: Only comma-separated numbers are allowed./i)).toBeInTheDocument();
+    expect(screen.getByText(/Invalid input: Only comma, semicolon, newline separated numbers are allowed./i)).toBeInTheDocument();
+  });
+
+  test("throws error when input contains negative numbers", () => {
+    render(<App />);
+    const input = screen.getByTestId('text-input-element');
+    const button = screen.getByRole('button', { name: /Calculate/i });
+    fireEvent.change(input, { target: { value: '//;\\n1;2;-1;-2' } });
+    fireEvent.click(button);
+    expect(screen.getByText(/Error: Negative numbers are not allowed -1,-2./i)).toBeInTheDocument();
   });
 
 });
