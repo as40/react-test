@@ -25,16 +25,16 @@ describe('String Calculator', () => {
     expect(screen.getByText(/Result: 6/i)).toBeInTheDocument();
   });
 
-  test('calculates the sum of input numbers separated with newline and comma', () => {
+  test('calculates the sum of input numbers separated with newline, comma, semicolon', () => {
     render(<App />);
     
     const input = screen.getByTestId('text-input-element');
     const button = screen.getByRole('button', { name: /Calculate/i });
 
     // Test with comma-separated values
-    fireEvent.change(input, { target: { value: '1,3\\n5' } });
+    fireEvent.change(input, { target: { value: '//;\\n1;2' } });
     fireEvent.click(button);
-    expect(screen.getByText(/Result: 9/i)).toBeInTheDocument();
+    expect(screen.getByText(/Result: 3/i)).toBeInTheDocument();
   });
 
   test('calculates when empty string', () => {
