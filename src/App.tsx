@@ -8,8 +8,11 @@ function App() {
   const add=(numbers: string)=> {
     if (!numbers) return 0;
   
-    const delimiters = /,/;
-    const numArray = numbers.split(delimiters).map(num => Number(num));
+    const delimiters = /[,]/;
+    if (/[^0-9,]/.test(numbers)) {
+      return "Invalid input: Only comma-separated numbers are allowed.";
+    }
+    const numArray = numbers.split(delimiters).map(num => Number(num.trim())).filter(num => !isNaN(num));
     
     return numArray.reduce((sum, num) => sum + num, 0);
   }

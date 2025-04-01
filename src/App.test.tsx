@@ -36,4 +36,24 @@ describe('String Calculator', () => {
     fireEvent.click(button);
     expect(screen.queryByTestId('result-element')).not.toBeInTheDocument();
   });
+
+  test("throws error when input contains non-numeric characters", () => {
+    render(<App />);
+    const input = screen.getByTestId('text-input-element');
+    const button = screen.getByRole('button', { name: /Calculate/i });
+    fireEvent.change(input, { target: { value: '1,a,3' } });
+    fireEvent.click(button);
+    expect(screen.getByText(/Result: Invalid input: Only comma-separated numbers are allowed./i)).toBeInTheDocument();
+    
+  });
+
+  test("throws error when input contains special characters", () => {
+    render(<App />);
+    const input = screen.getByTestId('text-input-element');
+    const button = screen.getByRole('button', { name: /Calculate/i });
+    fireEvent.change(input, { target: { value: '1,2$3' } });
+    fireEvent.click(button);
+    expect(screen.getByText(/Result: Invalid input: Only comma-separated numbers are allowed./i)).toBeInTheDocument();
+  });
+
 });
